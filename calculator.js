@@ -8,6 +8,7 @@ const btnClear = document.querySelector('.clear');
 let firstNumber = '';
 let secondNumber = '';
 let operator = '';
+let results = 0;
 
 const add = (num1, num2) => num1 + num2;
 const subtract = (num1, num2) => num1 - num2;
@@ -15,8 +16,9 @@ const multiply = (num1, num2) => num1 * num2;
 const divide = (num1, num2) => num1 / num2;
 
 const operate = (num1, op, num2) => {
-    n1 = Number(num1);
-    n2 = Number(num2);
+    let n1 = Number(num1);
+    let n2 = Number(num2);
+    let divError = '';
 
     if (op === '+') {
         return add(n1, n2);
@@ -25,6 +27,12 @@ const operate = (num1, op, num2) => {
     } else if (op === '*') {
         return multiply(n1, n2);
     } else if (op === '/') {
+        if (divide(n1, n2) === Infinity) {
+            firstNumber = '';
+            secondNumber = '';
+            operator = '';
+            return 'Error';
+        }
         return divide(n1, n2);
     }
 };
@@ -40,7 +48,7 @@ const handleDigits = e => {
     if (operator === '' && secondNumber === '') {
         firstNumber += digit;
         updateDisplay(firstNumber, '');
-    } else if (operator !== '' && secondNumber === '') {
+    } else if (operator !== '') {
         secondNumber += digit;
         updateDisplay(secondNumber, `${firstNumber} ${operator}`);
     }
@@ -49,24 +57,32 @@ const handleDigits = e => {
 const handleOperators = e => {
     let oper = e.target.textContent;
 
-    if (firstNumber === '') {
+    if (firstNumber === '' && secondNumber === '' && operator === '') {
         return;
-    } else if (firstNumber !== '') {
+    } else if (firstNumber !== '' && secondNumber === '' && operator === '') {
         operator = oper;
         updateDisplay('', `${firstNumber} ${oper}`);
+    } else if (firstNumber !== '' && secondNumber !== '' && operator !== '') {
+        results = operate(Number(firstNumber), operator, Number(secondNumber));
+        updateDisplay(results, `${firstNumber} ${operator} ${secondNumber}`);
+        firstNumber = results;
+        operator = oper;
+        secondNumber = '';
     }
 };
 
 const handleEqual = () => {
-    let results = 0;
     if (firstNumber === '' || secondNumber === '' || operator === '') {
         updateDisplay('Error', '');
         firstNumber = '';
         secondNumber = '';
         operator = '';
-    } else {
+    } else if (firstNumber !== '' && secondNumber !== '' && operator !== '') {
         results = operate(Number(firstNumber), operator, Number(secondNumber));
         updateDisplay(results, `${firstNumber} ${operator} ${secondNumber}`);
+        firstNumber = results;
+        operator = '';
+        secondNumber = '';
     }
 };
 
