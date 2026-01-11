@@ -3,6 +3,7 @@ const mainDisplay = document.querySelector('.main-display');
 const btnDigits = document.querySelectorAll('.digit');
 const btnOperators = document.querySelectorAll('.operator');
 const btnEqual = document.querySelector('.equal');
+const btnClear = document.querySelector('.clear');
 
 let firstNumber = '';
 let secondNumber = '';
@@ -69,6 +70,14 @@ const handleEqual = () => {
     }
 };
 
+const handleClear = () => {
+    firstNumber = '';
+    secondNumber = '';
+    operator = '';
+    updateDisplay('', '');
+};
+
 btnDigits.forEach(btn => btn.addEventListener('click', handleDigits));
 btnOperators.forEach(btn => btn.addEventListener('click', handleOperators));
 btnEqual.addEventListener('click', handleEqual);
+btnClear.addEventListener('click', handleClear);
