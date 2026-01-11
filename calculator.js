@@ -2,6 +2,7 @@ const tempDisplay = document.querySelector('.temp-display');
 const mainDisplay = document.querySelector('.main-display');
 const btnDigits = document.querySelectorAll('.digit');
 const btnOperators = document.querySelectorAll('.operator');
+const btnEqual = document.querySelector('.equal');
 
 let firstNumber = '';
 let secondNumber = '';
@@ -55,10 +56,19 @@ const handleOperators = e => {
     }
 };
 
-btnDigits.forEach(btn => {
-    btn.addEventListener('click', handleDigits);
-});
+const handleEqual = () => {
+    let results = 0;
+    if (firstNumber === '' || secondNumber === '' || operator === '') {
+        updateDisplay('Error', '');
+        firstNumber = '';
+        secondNumber = '';
+        operator = '';
+    } else {
+        results = operate(Number(firstNumber), operator, Number(secondNumber));
+        updateDisplay(results, `${firstNumber} ${operator} ${secondNumber}`);
+    }
+};
 
-btnOperators.forEach(btn => {
-    btn.addEventListener('click', handleOperators);
-})
+btnDigits.forEach(btn => btn.addEventListener('click', handleDigits));
+btnOperators.forEach(btn => btn.addEventListener('click', handleOperators));
+btnEqual.addEventListener('click', handleEqual);
