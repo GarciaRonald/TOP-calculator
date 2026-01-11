@@ -44,6 +44,12 @@ const updateDisplay = (mDisplay, tDisplay) => {
 
 const handleDigits = e => {
     let digit = e.target.textContent;
+
+    if (firstNumber !== '' && operator === '' && secondNumber === '' && results === 0 &&
+    tempDisplay.textContent !== '' && mainDisplay.textContent !== '') {
+        firstNumber = '';
+        handleClear('', '');
+    }
     
     if (operator === '' && secondNumber === '') {
         if (digit === '.') {
@@ -77,6 +83,7 @@ const handleOperators = e => {
         operator = oper;
         updateDisplay('', `${firstNumber} ${oper}`);
     } else if (firstNumber !== '' && secondNumber !== '' && operator !== '') {
+        results = operate(Number(firstNumber), operator, Number(secondNumber));
         results = results.toString().includes('.') ? +(Math.round(results + 'e+2') + 'e-2') : results;
         updateDisplay('', '');
         updateDisplay(results, `${firstNumber} ${operator} ${secondNumber}`);
@@ -99,6 +106,7 @@ const handleEqual = () => {
         firstNumber = results;
         operator = '';
         secondNumber = '';
+        results = 0;
     }
 };
 
