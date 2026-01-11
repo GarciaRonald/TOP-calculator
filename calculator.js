@@ -77,7 +77,8 @@ const handleOperators = e => {
         operator = oper;
         updateDisplay('', `${firstNumber} ${oper}`);
     } else if (firstNumber !== '' && secondNumber !== '' && operator !== '') {
-        results = operate(Number(firstNumber), operator, Number(secondNumber));
+        results = results.toString().includes('.') ? +(Math.round(results + 'e+2') + 'e-2') : results;
+        updateDisplay('', '');
         updateDisplay(results, `${firstNumber} ${operator} ${secondNumber}`);
         firstNumber = results;
         operator = oper;
@@ -93,6 +94,7 @@ const handleEqual = () => {
         operator = '';
     } else if (firstNumber !== '' && secondNumber !== '' && operator !== '') {
         results = operate(Number(firstNumber), operator, Number(secondNumber));
+        results = results.toString().includes('.') ? +(Math.round(results + 'e+2') + 'e-2') : results;
         updateDisplay(results, `${firstNumber} ${operator} ${secondNumber}`);
         firstNumber = results;
         operator = '';
