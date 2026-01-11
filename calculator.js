@@ -51,6 +51,9 @@ const handleDigits = e => {
         handleClear('', '');
     }
     if (operator === '' && secondNumber === '') {
+        if (firstNumber.length >= 10) {
+            return;
+        }
         if (digit === '.') {
             if (!firstNumber.includes(digit)) {
                 firstNumber += digit;
@@ -67,6 +70,9 @@ const handleDigits = e => {
         firstNumber += digit;
         updateDisplay(firstNumber, '');
     } else if (operator !== '') {
+        if (secondNumber.length >= 10) {
+            return;
+        }
         if (digit === '.') {
             if (!secondNumber.includes(digit)) {
                 secondNumber += digit;
