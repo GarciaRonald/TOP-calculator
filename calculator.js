@@ -46,9 +46,23 @@ const handleDigits = e => {
     let digit = e.target.textContent;
     
     if (operator === '' && secondNumber === '') {
+        if (digit === '.') {
+            if (!firstNumber.includes(digit)) {
+                firstNumber += digit;
+                updateDisplay(firstNumber, '');
+            }
+            return;
+        }
         firstNumber += digit;
         updateDisplay(firstNumber, '');
     } else if (operator !== '') {
+        if (digit === '.') {
+            if (!secondNumber.includes(digit)) {
+                secondNumber += digit;
+                updateDisplay(secondNumber, `${firstNumber} ${operator}`);
+            }
+            return;
+        }
         secondNumber += digit;
         updateDisplay(secondNumber, `${firstNumber} ${operator}`);
     }
