@@ -1,6 +1,7 @@
 const tempDisplay = document.querySelector('.temp-display');
 const mainDisplay = document.querySelector('.main-display');
 const btnDigits = document.querySelectorAll('.digit');
+const btnOperators = document.querySelectorAll('.operator');
 
 let firstNumber = '';
 let secondNumber = '';
@@ -26,8 +27,9 @@ const operate = (num1, op, num2) => {
     }
 };
 
-const updateDisplay = mDisplay => {
+const updateDisplay = (mDisplay, tDisplay) => {
     mainDisplay.textContent = mDisplay;
+    tempDisplay.textContent = tDisplay;
 };
 
 const handleDigits = e => {
@@ -35,10 +37,28 @@ const handleDigits = e => {
     
     if (operator === '' && secondNumber === '') {
         firstNumber += digit;
-        updateDisplay(firstNumber);
+        updateDisplay(firstNumber, '');
+    } else if (operator !== '' && secondNumber === '') {
+        secondNumber += digit;
+        updateDisplay(secondNumber, `${firstNumber} ${operator}`);
+    }
+};
+
+const handleOperators = e => {
+    let oper = e.target.textContent;
+
+    if (firstNumber === '') {
+        return;
+    } else if (firstNumber !== '') {
+        operator = oper;
+        updateDisplay('', `${firstNumber} ${oper}`);
     }
 };
 
 btnDigits.forEach(btn => {
     btn.addEventListener('click', handleDigits);
 });
+
+btnOperators.forEach(btn => {
+    btn.addEventListener('click', handleOperators);
+})
