@@ -50,7 +50,6 @@ const handleDigits = e => {
         firstNumber = '';
         handleClear('', '');
     }
-    
     if (operator === '' && secondNumber === '') {
         if (digit === '.') {
             if (!firstNumber.includes(digit)) {
@@ -58,6 +57,12 @@ const handleDigits = e => {
                 updateDisplay(firstNumber, '');
             }
             return;
+        } else if (digit === 'l<') {
+            if (firstNumber.length > 0) {
+                firstNumber = firstNumber.substring(0, firstNumber.length - 1);
+                updateDisplay(firstNumber, '');
+                return;
+            }
         }
         firstNumber += digit;
         updateDisplay(firstNumber, '');
@@ -68,6 +73,12 @@ const handleDigits = e => {
                 updateDisplay(secondNumber, `${firstNumber} ${operator}`);
             }
             return;
+        } else if (digit === 'l<') {
+            if (secondNumber.length > 0) {
+                secondNumber = secondNumber.substring(0, secondNumber.length - 1);
+                updateDisplay(secondNumber, `${firstNumber} ${operator}`);
+                return;
+            }
         }
         secondNumber += digit;
         updateDisplay(secondNumber, `${firstNumber} ${operator}`);
