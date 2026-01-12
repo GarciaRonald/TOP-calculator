@@ -9,6 +9,8 @@ body {
     width: 100vw;
     height: 100vh;
     display: flex;
+    flex-direction: column;
+    gap: 40px;
     justify-content: center;
     align-items: center;
 }
@@ -92,4 +94,8 @@ button {
 
 .operator:active {
     border: white solid;
+}
+
+#footer {
+    font-family: Helvetica, sans-serif;
 }
